@@ -1,10 +1,10 @@
-import Header from './header';
+import Header from './Header';
 
 export default function SearchLayout({ children }) {
   return (
     <>
       <Header />
-      {children}
+      <main>{children}</main>
     </>
   );
 }
