@@ -62,9 +62,9 @@ export default function Header() {
     'bg-opacity-50',
     'transition-opacity duration-300 ease-in-out',
     {
-      hidden: isExpanded,
+      hidden: !isExpanded,
       block: isExpanded,
-      'opacity-0': isExpanded,
+      'opacity-0': !isExpanded,
       'opacity-100': isExpanded,
     },
   );
