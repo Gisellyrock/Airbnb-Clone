@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import CollapseCard from './CollapseCard';
+import DestinationInput from './mobile/Destinationinput';
 
-const MobileMenu = [{ label: 'Where?' }, { label: 'When?' }, { label: 'Who?' }];
+const MobileMenu = [
+  { label: 'Where?', content: <DestinationInput /> },
+  { label: 'When?' },
+  { label: 'Who?' },
+];
 
 const MobileNav = () => {
   const [currentTab, setCurrentTab] = useState(0);
@@ -44,7 +49,7 @@ const MobileNav = () => {
                 key={index}
                 index={index}
               >
-                <p>Children</p>
+                <p>{item.content}</p>
               </CollapseCard>
             ))}
           </div>
