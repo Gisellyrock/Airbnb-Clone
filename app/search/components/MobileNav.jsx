@@ -1,8 +1,14 @@
+import { useState } from 'react';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import CollapseCard from './CollapseCard';
 
 const MobileMenu = [{ label: 'Where?' }, { label: 'When?' }, { label: 'Who?' }];
 
 const MobileNav = () => {
+  const [currentTab, setCurrentTab] = useState(0);
+
+  const handleCurrentUpdate = (tabIndex) => setCurrentTab(tabIndex);
+
   return (
     <div className="m-2">
       <label
@@ -23,8 +29,6 @@ const MobileNav = () => {
       <input type="checkbox" id="my_modal_7" class="modal-toggle" />
       <div class="modal" role="dialog">
         <div class="modal-box">
-          <h3 class="text-lg font-bold">Hello!</h3>
-          <p class="py-4">This modal works with a hidden checkbox!</p>
           <label
             className="absolute right-0 top-0 mt-4 mr-4 btn-close"
             for="my_modal_7"
@@ -33,13 +37,24 @@ const MobileNav = () => {
           </label>
           <div className="mt-6">
             {MobileMenu.map((item, index) => (
-              <p key={index}>{item.label}</p>
+              <CollapseCard
+                title={item.label}
+                updateTab={handleCurrentUpdate}
+                isCurrent={currentTab == index}
+                key={index}
+                index={index}
+              >
+                <p>Children</p>
+              </CollapseCard>
             ))}
           </div>
           <div className="modal-footer">
-            <div className="modal-footer-content">
-              <div>Clear All</div>
-              <button>Search</button>
+            <div className="modal-footer-content flex p-4 justify-between items-center">
+              <div className="underline">Clear All</div>
+              <button className="bg-primary px-4 py-2 rounded-md text-white mr-2 flex justify-center items-center">
+                <MagnifyingGlassIcon className="w-5 h-5 text-white" />
+                <span>Search</span>
+              </button>
             </div>
           </div>
         </div>
