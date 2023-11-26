@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import CollapseCard from './CollapseCard';
 import DestinationInput from './mobile/Destinationinput';
+import CalendarPicker from './CalendarPicker';
 
 const MobileMenu = [
   { label: 'Where?', content: <DestinationInput /> },
-  { label: 'When?' },
+  { label: 'When?', content: <CalendarPicker /> },
   { label: 'Who?' },
 ];
 

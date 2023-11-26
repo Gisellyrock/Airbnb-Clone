@@ -73,7 +73,7 @@ export default function Header() {
     },
   );
 
-  const userIconClasses = clsx('text-slate-600 flex', {
+  const userIconClasses = clsx('text-slate-600 hidden md:flex', {
     'items-center': !isExpanded,
     'items-center': isExpanded,
   });
