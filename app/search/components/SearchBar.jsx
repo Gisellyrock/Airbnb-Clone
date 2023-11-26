@@ -84,7 +84,9 @@ const SearchBar = ({ toggleExpanded }) => {
       <div className="dropdown dropdown-end px-4">
         <label tabIndex={2}>
           <p className="font-bold">Who</p>
-          <p className="text-slate-600">{count > 0 ? count : 'Add Guests'}</p>
+          <p className="text-slate-600">
+            {count > 0 ? `${count} guests` : 'Add Guests'}
+          </p>
         </label>
         <div
           tabIndex={2}
