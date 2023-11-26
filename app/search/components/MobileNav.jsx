@@ -3,17 +3,20 @@ import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import CollapseCard from './CollapseCard';
 import DestinationInput from './mobile/Destinationinput';
 import CalendarPicker from './CalendarPicker';
+import { Counter } from './Counter';
+import { useSearchStore } from '../../../store';
 
 const MobileMenu = [
   { label: 'Where?', content: <DestinationInput /> },
   { label: 'When?', content: <CalendarPicker /> },
-  { label: 'Who?' },
+  { label: 'Who?', content: <Counter label="Adults" /> },
 ];
 
 const MobileNav = () => {
   const [currentTab, setCurrentTab] = useState(0);
 
   const handleCurrentUpdate = (tabIndex) => setCurrentTab(tabIndex);
+  const removeAllFilters = useSearchStore((state) => state.removeAllFilters);
 
   return (
     <div className="m-2">
@@ -50,13 +53,15 @@ const MobileNav = () => {
                 key={index}
                 index={index}
               >
-                <p>{item.content}</p>
+                {item.content}
               </CollapseCard>
             ))}
           </div>
           <div className="modal-footer">
             <div className="modal-footer-content flex p-4 justify-between items-center">
-              <div className="underline">Clear All</div>
+              <button onClick={removeAllFilters} className="underline">
+                Clear All
+              </button>
               <button className="bg-primary px-4 py-2 rounded-md text-white mr-2 flex justify-center items-center">
                 <MagnifyingGlassIcon className="w-5 h-5 text-white" />
                 <span>Search</span>

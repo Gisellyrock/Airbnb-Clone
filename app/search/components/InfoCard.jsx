@@ -1,14 +1,54 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as FilledHeartIcon } from '@heroicons/react/24/solid';
 import { StarIcon } from '@heroicons/react/24/solid';
+import { motion, useAnimation } from 'framer-motion';
+import { useReward } from 'react-rewards';
+
+const rewardConfigs = {
+  lifetime: 22,
+  angle: 194,
+  decay: 0.07,
+  spread: 360,
+  startVelocity: 41,
+  elementCount: 23,
+  elementSize: 5,
+};
 
 const InfoCard = ({ listing }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const controls = useAnimation();
+  const { reward, isAnimating } = useReward(
+    `reward_${listing.id}`,
+    'confetti',
+    rewardConfigs,
+  );
+  let timeoutId;
+
+  useEffect(() => {
+    if (isFavorite) {
+      controls.start({ scale: [0, 1] });
+      timeoutId = setTimeout(() => reward(), 500);
+    } else {
+      controls.start({ scale: [1, 0] });
+    }
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [isFavorite, controls]);
 
   const handleFavoriteUpdate = () => {
-    setIsFavorite((prevIsFavorite) => !prevIsFavorite);
+    setIsFavorite((prevIsFavorite) => {
+      if (!prevIsFavorite) {
+        controls.start({ scale: [0, 1] });
+        timeoutId = setTimeout(() => reward(), 500);
+      } else {
+        controls.start({ scale: [1, 0] });
+      }
+      return !prevIsFavorite;
+    });
   };
 
   return (
@@ -31,12 +71,20 @@ const InfoCard = ({ listing }) => {
           onClick={handleFavoriteUpdate}
           className="absolute bottom-4 right-4 p-2 z-30"
         >
-          {isFavorite ? (
-            <FilledHeartIcon className="w-5 h-5 text-primary" />
-          ) : (
-            <HeartIcon className="w-5 h-5 text-primary" />
-          )}
+          <span id={`reward_${listing.id}`}>
+            {isFavorite ? (
+              <FilledHeartIcon className="w-5 h-5 text-primary" />
+            ) : (
+              <HeartIcon className="w-5 h-5 text-primary" />
+            )}
+          </span>
         </button>
+        <motion.div
+          animate={controls}
+          className="absolute bottom-4 right-4 p-2 z-30"
+        >
+          <FilledHeartIcon className="w-5 h-5 text-primary" />
+        </motion.div>
       </div>
     </div>
   );
