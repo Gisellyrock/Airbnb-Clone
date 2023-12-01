@@ -143,8 +143,8 @@ export default function Header() {
               <SearchBar toggleExpanded={toggleExpanded} />
             </motion.div>
             <motion.button
-              inital="inital"
-              animate={isExpanded ? 'hidden' : 'inital'}
+              initial="initial"
+              animate={isExpanded ? 'hidden' : 'initial'}
               transition={{ type: 'linear' }}
               onClick={toggleExpanded}
               variants={searchContainerVariants}
